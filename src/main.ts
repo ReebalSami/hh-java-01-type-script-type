@@ -1,55 +1,63 @@
+type Grade = 1 | 2 | 3 | 4 | 5 | 6 | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | undefined;
+
 type Student = {
     firstName: string;
     lastName: string;
     age: number;
-    grades: (1 | 2 | 3 | 4 | 5 | 6)[];
+    grades: Grade[];
+};
+
+const displayGrades = (grades: Grade[]): string => {
+    return grades.map(grade => (grade !== undefined ? grade : '*')).join(', ');
 };
 
 const student1: Student = {
     firstName: 'John',
     lastName: 'Doe',
     age: 20,
-    grades: [2, 1, 3, 1]
+    grades: [2, 'A', 3, 'B', undefined]
 };
 
 const student2: Student = {
     firstName: 'Jane',
     lastName: 'Smith',
     age: 22,
-    grades: [2, 2, 1, 2]
+    grades: ['C', 'B', 1, 2]
 };
 
 const student3: Student = {
     firstName: 'Alex',
     lastName: 'Johnson',
     age: 21,
-    grades: [1, 1, 2, 2]
+    grades: ['A', 1, 'B', 'C']
 };
 
 const student4: Student = {
     firstName: 'Emily',
     lastName: 'Davis',
     age: 19,
-    grades: [2, 3, 2, 1]
+    grades: [2, 'D', 'C', 1]
 };
 
 const student5: Student = {
     firstName: 'Chris',
     lastName: 'Williams',
     age: 23,
-    grades: [2, 1, 2, 1]
+    grades: ['B', 1, 2, 'A']
 };
 
+let studentArray:Student[] = [student1, student2, student3, student4, student5];
+let studentArrayTry: Student[] = []
 function showStudentInfos(student: Student) {
     console.log(student.firstName + " " + student.lastName + "(" + student.age
-    + ")" + "\n" + "=".repeat(30))
+    + ")" + "\n" + "=".repeat(30) + "\nGrades: " + displayGrades(student.grades))
 }
 
-showStudentInfos(student1);
-showStudentInfos(student2);
-showStudentInfos(student3);
-showStudentInfos(student4);
-showStudentInfos(student5);
+function showAllStudents(students: Student[]) {
+    students.forEach(showStudentInfos)
+}
+
+showAllStudents(studentArray)
 
 
 /*
