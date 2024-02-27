@@ -66,7 +66,7 @@ const students: Student[] = [
 ];
 
 const convertGrades = (grade: Grade): number | undefined => {
-    if (typeof grade === "string") {
+        if (typeof grade === "string") {
         switch (grade) {
             case "A":
                 return 1;
@@ -98,15 +98,19 @@ function nameAndAge(student: Student): string{
     return student.firstName + " " + student.lastName + "(" + student.age
     + ")"
 }
+
+function countTotalGrades(subjectGrades: SubjectGrade[]): number {
+    return subjectGrades.reduce((total:number, { grades }) => total + grades.length, 0);
+} // student.subjects.grades[!undefined].count)
+
 function showStudentInfos(student: Student) {
+
     console.log(nameAndAge(student) + "\n"
         + "=".repeat(nameAndAge(student).length)
         + "\nNoten: \n"
         + displaySubjectGrades(student.subjects)
-        + "\nAnzahl der Noten: " + student.subjects.reduce(
-            (total, { grades }) => total + grades.filter(grade => grade !== undefined).length,
-            0
-        )) // student.subjects.grades[!undefined].count)
+        + "\nAnzahl der Noten: " + countTotalGrades(student.subjects)
+            )
 }
 
 function showAllStudents(students: Student[]) {
