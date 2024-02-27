@@ -65,6 +65,27 @@ const students: Student[] = [
     }
 ];
 
+const convertGrades = (grade: Grade): number | undefined => {
+    if (typeof grade === "string") {
+        switch (grade) {
+            case "A":
+                return 1;
+            case "B":
+                return 2;
+            case "C":
+                return 3;
+            case "D":
+                return 4;
+            case "E":
+                return 5;
+            case "F":
+                return 6;
+            default: return undefined
+        }
+    }
+    return grade;
+}
+
 const displayGrades = (grades: Grade[]): string => {
     return grades.map(grade => (grade !== undefined ? grade : "*")).join(", ");
 };
@@ -81,7 +102,11 @@ function showStudentInfos(student: Student) {
     console.log(nameAndAge(student) + "\n"
         + "=".repeat(nameAndAge(student).length)
         + "\nNoten: \n"
-        + displaySubjectGrades(student.subjects))
+        + displaySubjectGrades(student.subjects)
+        + "\nAnzahl der Noten: " + student.subjects.reduce(
+            (total, { grades }) => total + grades.filter(grade => grade !== undefined).length,
+            0
+        )) // student.subjects.grades[!undefined].count)
 }
 
 function showAllStudents(students: Student[]) {
@@ -89,71 +114,3 @@ function showAllStudents(students: Student[]) {
 }
 
 showAllStudents(students)
-
-
-/*
-Step 1: Write a function that outputs a student with their grades, where a student should be output with first name, last name, age, and a list of grades.
-
-
-    Highlight the output of the first and last names, age, and grades with a line of 30x "=".
-    Example:
-
-
-Anton Meier (17)
-==============================
-Grades: 1,4,3,1,3,2,1,2
-
-
-Step 2: Allow strings and numbers as grades
-Task:
-
-
-    Ensure that besides grades as numbers (German system), values A to F (American system) are also supported as grades. The function should output the student's grades.
-
-
-Example:
-
-
-    Anton Meier (17)
-==============================
-
-Noten:
-A,2,F,3,1,B,2,5
-
-
-Step 3: Allow undefined as a value (displayed as *)
-Task:
-
-
-    Ensure that "undefined" is now supported as a value in the grades. The function should output the student's grades and represent "undefined" as "*". (For example, if the student was absent and not graded).
-
-
-Example:
-
-
-    Anton Meier (17)
-===========================
-
-Noten:
-A,2,*,3,1,B,*,5
-
-
-Step 4: Print a list of all students in the console
-Task:
-
-
-    Write a function that prints a list of all students in the console.
-
-
-    Example:
-
-
-Anton Meier (16)
-===========================
-Grades: 1,4,3,1,A,*,1,2
-
-Berta Müller (17)
-===========================
-Grades: A,*,1
-
-*/
